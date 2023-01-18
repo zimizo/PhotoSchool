@@ -1,0 +1,33 @@
+{% extends 'navigation/base.html' %}
+
+{% block content %}
+<div class="container p-3 h-75">
+<h1> {{ course.name }} </h1>
+
+<p>{{ course.description }}</p>
+
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      <div class="col">
+        <h1>{{ count_lessons.lc }}</h1><h4>ЛЕКЦИЙ</h4>
+      </div>
+      <div class="col">
+        <h1>{{ count_lessons.ts }}</h1><h4>ТЕСТОВ</h4>
+      </div>
+      <div class="col">
+        <h1>{{ count_lessons.tk }}</h1><h4>ЗАДАНИЙ</h4>
+          </div>
+        </div>
+
+    <form method="post">
+{% csrf_token %}
+{% if in_studying %}
+    <input type="submit" name="continue_course" value="Продолжить изучение" class="btn btn-outline-primary">
+{% else %}
+        <input type="submit" name="start_course" value="Начать изучение" class="btn btn-outline-primary">
+        {% endif %}
+</form>
+
+      </div>
+
+{% endblock %}

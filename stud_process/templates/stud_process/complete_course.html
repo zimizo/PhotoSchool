@@ -1,0 +1,36 @@
+{% extends 'stud_process/study_base.html' %}
+
+
+{% block head %}
+
+
+    <!-- Bootstrap core CSS -->
+
+
+    <!-- Custom styles for this template -->
+    <link href="/static/stud_process/sidebars.css" rel="stylesheet">
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
+
+
+{% block lesson_content %}
+<div class="w-100 h-100">
+    <div class="text-center m-6">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+            <div class="alert alert-light" role="alert">
+                <h3>Поздравляем! Курс «{{ full_course.course.name }}» успешно пройден!</h3>
+            </div>
+        <img class="rounded" src="\media\galochka.png" title="Галочка" height="350px" width="350px">
+        <br>
+        <a href="{% url 'certificate' complete_coursed.id %}" target="_blank"><button class="btn btn-primary p-3 m-3">Скачать сертификат</button></a>
+    </div>
+</div>
+
+      <script src="/static/stud_process/sidebars.js"></script>
+      <script src="/static/custom_admin/jquery-3.6.0.min.js"></script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'custom_admin/base_admin.html' %}
+
+{% block content %}
+<div class="row p-3">
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+    <li><a href="{% url 'custom_admin:general_page' %}" class="text-decoration-none text-reset"><h6>Главная > </h6></a></li>
+    <li><a href="{% url 'custom_admin:all_courses' %}" class="text-decoration-none text-reset"><h6>Курсы > </h6></a></li>
+    </ul>
+</div>
+<div class="p-3">
+<form method="post" enctype="multipart/form-data" novalidate >
+    {% csrf_token %}
+    <label class="small mb-1" for="{{ form.name.id_for_label }}">Название курса:</label>
+    {{ form.name }}
+    <label class="small mb-1" for="{{ form.photo.id_for_label }}">Фотография:</label>
+    <br>
+    {{ form.photo }}
+    <br>
+    <label class="small mb-1" for="{{ form.description.id_for_label }}">Описание курса:</label>
+    {{ form.description }}
+    <label class="small mb-1" for="{{ form.is_draft.id_for_label }}">Черновик:</label>
+    {{ form.is_draft }}
+    <div class="p-3">
+    {% for module in modules %}
+        <a href="{% url 'custom_admin:details_module' course.id module.id %}" class="text-decoration-none text-reset"><h2>{{ module.name }}</h2></a>
+    {% endfor %}
+    </div>
+    <input type="submit" value="Создать" class="btn btn-outline-primary">
+</form>
+</div>
+{% endblock %}

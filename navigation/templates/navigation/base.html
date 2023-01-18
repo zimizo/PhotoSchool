@@ -1,0 +1,77 @@
+<head>
+{% load static %}
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    {% block head %}{% endblock %}
+
+
+
+
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white">
+
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <img src="/static/navigation/logo.png" width="70px" height="70px">
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Главная</a></li>
+          <li><a href="{% url 'list_courses' %}" class="nav-link px-2 text-white">Курсы</a></li>
+          <li><a href="{% url 'trenapp' %}" class="nav-link px-2 text-white">Тренажеры</a></li>
+          {% if user.is_staff %}
+            <li class="nav-item dropdown">
+
+            <li><a href="{% url 'custom_admin:general_page' %}" class="nav-link px-2 text-white">Панель администратора</a></li>
+              <li><a href="{% url 'teacher_panel:general_page' %}" class="nav-link px-2 text-white">Панель преподавателя</a></li>
+
+
+          {% endif %}
+        </ul>
+
+        {% if user.is_authenticated %}
+
+          <div class="text-end d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start form">
+            <form action="{% url 'users:logoutuser' %}" method="POST" style="margin: 0;">
+                <a href="{% url 'user_profile' %}" class="link px-2 text-white">Вы вошли как: {{ user.email }}</a>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">Выйти</button>
+            </form>
+          </div>
+
+        {% else %}
+
+            <div class="text-end">
+                <a href="{% url 'users:loginuser' %}"> <button type="button" class="btn btn-outline-light me-2">Войти</button> </a>
+                <a href="{% url 'users:signupuser' %}" class="btn btn-warning"> Зарегистрироваться</a>
+            </div>
+
+        {% endif %}
+
+      </div>
+    </div>
+  </header>
+
+
+{% block content %}{% endblock %}
+
+
+<footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+          <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <p class="col-md-4 mb-0 text-muted">&copy; 2022 Зиатдинов И. Б., Кордюков А. Г., Кошель В. С.</p>
+
+            <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+              <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+            </a>
+
+            <ul class="nav col-md-4 justify-content-end">
+              <li class="nav-item"><a href="{% url 'authors' %}" class="nav-link px-2 text-muted">Авторы</a></li>
+              <li class="nav-item"><a href="{% url 'user_profile' %}" class="nav-link px-2 text-muted">Личный кабинет</a></li>
+            </ul>
+          </footer>
+    </div>
+</footer>
+
+</body>

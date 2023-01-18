@@ -1,0 +1,131 @@
+{% extends 'navigation/base.html' %}
+
+
+{% block head %}
+{% load static %}
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="/static/stud_process/sidebars.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-nowrap h-75">
+<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+    <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+
+      <span class="fs-5 fw-semibold">{{ full_course.course.name }}</span>
+    </div>
+    <ul class="list-unstyled ps-0">
+
+    {% for module in full_course.modules %}
+        {% if module.module_object.id == module_id %}
+         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse" data-bs-target="#module-{{ module.module_object.id }}-collapse" aria-expanded="true">
+
+          {{ module.module_object.name }}
+        </button>
+        <div class="collapse show" id="module-{{ module.module_object.id }}-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+             {% for lesson in module.lessons %}
+                    <li><a href="{% url 'stud_process:study_l' full_course.course.id module.module_object.id lesson.content_type lesson.id %}" class="link-dark d-inline-flex text-decoration-none rounded">{{ lesson.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </div>
+      </li>
+        {% else %}
+      <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#module-{{ module.module_object.id }}-collapse" aria-expanded="false">
+
+          {{ module.module_object.name }}
+        </button>
+        <div class="collapse" id="module-{{ module.module_object.id }}-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+             {% for lesson in module.lessons %}
+                    <li><a href="{% url 'stud_process:study_l' full_course.course.id module.module_object.id lesson.content_type lesson.id %}" class="link-dark d-inline-flex text-decoration-none rounded">{{ lesson.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </div>
+      </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+        <div id="content" class="w-100">
+            {% if completed_course %}
+                <div class="alert alert-success text-center" role="alert">
+                    <h5>Курс «{{ full_course.course.name }}» успешно пройден!
+                        <a href="{% url 'certificate' completed_course.id %}" target="_blank"><button class="btn btn-primary">Скачать сертификат</button></a>
+                    </h5>
+                </div>
+            {% endif %}
+            <form enctype="multipart/form-data" method="post" novalidate class="me-md-auto">
+                {% csrf_token %}
+                {% block lesson_content %}{% endblock %}
+            </form>
+        </div>
+
+</div>
+
+<script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/stud_process/sidebars.js"></script>
+
+
+
+{% endblock %}

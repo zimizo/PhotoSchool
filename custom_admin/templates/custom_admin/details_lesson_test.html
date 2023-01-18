@@ -1,0 +1,87 @@
+{% extends 'custom_admin/base_admin.html' %}
+{% block head %}
+    {% load static %}
+    <script src="/static/custom_admin/add_lesson_test.js"></script>
+    <script src="/static/custom_admin/jquery-3.6.0.min.js"></script>
+
+{% endblock %}
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <p>
+        <label for="id_name">Название:</label>
+        <br>
+        <input class="w-50" type="text" name="name" maxlength="100" required="" id="id_name" value="{{ lesson.name }}">
+    </p>
+
+    <p>
+        <label for="id_description">Описание:</label>
+        <br>
+        <textarea name="description" class="w-50" cols="40" rows="10" maxlength="1000" required="" id="id_description">{{ lesson.description }}</textarea>
+    </p>
+
+    <p>
+        <label for="id_time">Время:</label>
+        <br>
+        <input type="number" name="time" value="{{ lesson.time }}" required="" id="id_time" >
+    </p>
+
+    <p>
+        <label for="id_min_ball">Минимальный балл:</label>
+        <br>
+        <input type="number" name="min_ball" value="{{ lesson.min_ball }}" required="" id="id_min_ball" >
+    </p>
+
+
+
+    <p>
+        <label for="id_is_draft">Черновик:</label>
+        <input type="checkbox" name="is_draft" id="id_is_draft" {% if lesson.is_draft %} checked="true" {% endif %}>
+    </p>
+
+
+    <div id="questions" class="w-100">
+
+        <input type="hidden" name="total_questions" value="1" id="total_questions">
+
+        {% for question in questions %}
+        <fieldset id="added_q_{{ question.id }}">
+            <p>
+                <label for="id_added_text_q_{{ question.id }}">Вопрос:</label>
+                <br>
+                <input type="text" class="w-50" name="added_text_q_{{ question.id }}" maxlength="100" required="" id="id_added_text_q_{{ question.id }}" value="{{ question.text }}">
+                <a onclick="delete_an_existing_q('added_q_{{ question.id }}', {{ question.id }})"><img src="/static/admin/img/icon-deletelink.svg" alt="False" title="Удплить вопрос"></a>
+            </p>
+
+            <p>
+                <label for="id_added_description_q_{{ question.id }}">Примечание:</label>
+                <br>
+                <textarea class="w-50"  name="added_description_q_{{ question.id }}" cols="40" rows="3" maxlength="250" id="id_added_description_q_{{ question.id }}">{{ question.description }}</textarea>
+            </p>
+
+            <div id="added_q_{{ question.id }}_answers">
+
+                <input  type="hidden" name="total_added_answers_q_{{ question.id }}" value="1" id="total_added_answers_q_{{ question.id }}">
+                {% for answer in answers|get_item:question.id %}
+
+                <p id="added_q_{{ question.id }}_a_{{ answer.id }}">
+                    <input type="checkbox"  id="added_cb_{{ answer.id }}_q_{{ question.id }}" {% if answer.is_true %} checked="true" {% endif %} name="added_cb_{{ answer.id }}_q_{{ question.id }}">  <input class="w-25"  type="text" value="{{ answer.text }}" name="added_answer_{{ answer.id }}_q_{{ question.id }}" maxlength="100" required="" id="added_answer_{{ answer.id }}_q_{{ question.id }}"><a onclick="delete_an_existing_a('added_q_{{ question.id }}_a_{{ answer.id }}',{{ answer.id }})"> <img src="/static/admin/img/icon-deletelink.svg" alt="False" title="Удплить ответ"> </a>
+                </p>
+
+                {% endfor %}
+
+            </div>
+
+            <a onclick="add_answer_in_added('{{ question.id }}')"><img src="/static/admin/img/icon-addlink.svg" alt="False" title="Добавить ответ">  Добавить ответ</a>
+            <br>
+            <a onclick="add_question('added_q_{{ question.id }}')"><img src="/static/admin/img/icon-addlink.svg" alt="False" title="Добавить вопрос">  Добавить вопрос</a>
+
+        </fieldset>
+        {% endfor %}
+    </div>
+    <br>
+    <button class="btn btn-primary" type="submit" name="save_and_quit" > Сохранить и выйти  </button> <button name="save" type="submit" class="btn btn-outline-primary" > Сохранить </button>
+</form>
+{% endblock %}

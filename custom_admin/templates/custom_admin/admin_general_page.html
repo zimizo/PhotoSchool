@@ -1,0 +1,8 @@
+{% extends 'custom_admin/base_admin.html' %}
+
+{% block content %}
+
+    <a href="{% url 'custom_admin:all_courses' %}" class="text-decoration-none text-reset"><h2>Курсы</h2></a>
+    <a href="{% url 'custom_admin:users' %}" class="text-decoration-none text-reset"><h2>Пользователи</h2></a>
+
+{% endblock %}

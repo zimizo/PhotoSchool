@@ -1,0 +1,38 @@
+{% extends 'custom_admin/base_admin.html' %}
+
+{% block content %}
+<div class="row p-3 container">
+    <div class="row">
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+    <li><a href="{% url 'custom_admin:general_page' %}" class="text-decoration-none text-reset"><h6>Главная > </h6></a></li>
+    <li><a href="{% url 'custom_admin:users' %}" class="text-decoration-none text-reset"><h6>Пользователи > </h6></a></li>
+            <li><a href="#" class="text-decoration-none text-reset"><h6>{{ current_user.email }} > </h6></a></li>
+
+    </ul>
+</div>
+   <form method="post" class="p-3 w-75">
+      {% csrf_token %}
+    <label class="small mb-1" for="{{ form.email.id_for_label }}">Электронный адрес:</label>
+    {{ form.email }}
+
+      <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Фамилия:</label>
+    {{ form.last_name }}
+
+      <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Имя:</label>
+    {{ form.first_name }}
+
+      <label class="small mb-1" for="{{ form.patronymic.id_for_label }}">Отчество:</label>
+    {{ form.patronymic }}
+<br>
+       <label class="small mb-1" for="{{ form.is_superuser.id_for_label }}">Супер пользователь:</label>
+    {{ form.is_superuser }}
+<br>
+       <label class="small mb-1" for="{{ form.is_staff.id_for_label }}">Преподаватель/Admin:</label>
+    {{ form.is_staff }}
+<br>
+       {% if user.is_superuser %}
+            <input type="submit" class="btn btn-primary my-3" value="Сохранить" name="user_profile_save">
+       {% endif %}
+    </form>
+</div>
+{% endblock %}

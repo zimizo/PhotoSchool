@@ -1,0 +1,8 @@
+{% extends 'teacher_panel/base_teacher_panel.html' %}
+
+{% block content %}
+
+    <a href="{% url 'teacher_panel:check_task_list_courses' %}" class="text-decoration-none text-reset"><h2>Проверка заданий</h2></a>
+    <a href="{% url 'teacher_panel:check_users_list_users' %}" class="text-decoration-none text-reset"><h2>Студенты</h2></a>
+
+{% endblock %}

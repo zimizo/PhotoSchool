@@ -1,0 +1,96 @@
+{% extends 'stud_process/study_base.html' %}
+{% block lesson_content %}
+            {% if content.content_type == 'c' %}
+                <div class="p-3"><h4>{{ content.content.description }}</h4></div>
+            {% elif  content.content_type == 'l' %}
+
+                {% if content.lesson_type == 'lc' %}
+
+                    <div class="p-3">
+                        <h2 style="align: centre;">{{ content.content.name }}</h2>
+                        {{ content.content.text|safe}}
+                    </div>
+                        {% if content.passed_lesson %}
+                            Урок пройден!
+                        {% else %}
+                            <input type="submit" class="lesson-btn btn btn-sm btn-primary" value="Отметить как выполненое" name="passed_lc">
+                        {% endif %}
+                {% elif content.lesson_type == 'vd' %}
+                    <div class="p-3">
+                        <h2 style="align: centre;">{{ content.content.name }}</h2>
+                        <video width="90%" controls><source src="/media/{{ content.content.video }}" type="video/mp4"></video></div>
+                        {% if content.passed_lesson %}
+                            Урок пройден!
+                        {% else %}
+                            <input type="submit" class="lesson-btn btn btn-sm btn-primary" value="Отметить как выполненое" name="passed_vd">
+                        {% endif %}
+                {% elif content.lesson_type == 'tk' %}
+
+                    <div class="p-3">
+                        <h2 style="align: centre;">{{ content.content.name }}</h2>
+                        <h6 style="color: gray;">{{ content.content.description }}</h6></div>
+                        <div class="p-3"><p>
+                        {{ content.content.text }}
+                        </p>
+                            {% if content.task_solution %}
+                                {% if content.task_solution.is_true %}
+
+                                    <div class="alert alert-success" role="alert">
+                                            Задание выполнено!
+                                    </div>
+
+                                {% elif content.task_solution.is_rejected %}
+                                    <div class="alert alert-danger" role="alert">
+                                            Задание отклонено преподавателем!
+                                    </div>
+                                    <p>
+                                        Комментарий: {{ content.task_solution.comment }}
+                                    </p>
+                                    <input type="submit" class="lesson-btn btn btn-sm btn-primary" value="Редактировать" name="task">
+                                {% else %}
+                                    <div class="alert alert-secondary" role="alert">
+                                            Задание на проверке
+                                    </div>
+                                    <input type="submit" class="lesson-btn btn btn-sm btn-primary" value="Редактировать" name="task">
+                                {% endif %}
+                            {% else %}
+                                <input type="submit" class="lesson-btn btn btn-sm btn-primary" value="Перейти к выполнению" name="task">
+                            {% endif %}
+                        </div>
+
+                {% elif content.lesson_type == 'ts' %}
+                        <div class="p-3">
+                            <h2 style="align: centre;">{{ content.content.name }}</h2>
+                            <h6 style="color: gray;">
+                                {{ content.content.description }}
+                            </h6>
+                        </div>
+                        <div class="p-3">
+                            {% if content.test_result %}
+                                {% if content.test_result.ball >= content.test_result.test.min_ball %}
+                                    <div class="alert alert-success">
+                                        Ваша оценка - {{ content.test_result.ball }}% Тест пройден!
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-danger">
+                                        Ваша оценка - {{ content.test_result.ball }}% Тест не пройден, попробуйте еще раз!
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div class="alert alert-secondary">
+                                         Вы еще не проходили тест
+                                </div>
+                            {% endif %}
+                            <p>Время на решение: {{ content.content.time }} минут</p>
+                            <p>Проходной балл: {{ content.content.min_ball }} %</p>
+
+
+                            <input type="submit" class="lesson-btn btn btn-sm btn-primary" value="Начать тест" name="test"{% if content.passed_lesson %}disabled{% endif %}>
+
+                        </div>
+
+
+
+                {% endif %}
+            {% endif %}
+{% endblock %}

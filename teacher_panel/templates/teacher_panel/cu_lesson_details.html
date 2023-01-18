@@ -1,0 +1,82 @@
+{% extends 'teacher_panel/base_teacher_panel.html' %}
+
+{% block content %}
+
+    <p>
+        <h4>
+        <label for="id_owner">
+
+                Студент:
+
+        </label>
+        <label  id="id_owner">
+
+            {{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}
+
+        </label>
+        </h4>
+    </p>
+    <p>
+        <h4>
+        <label for="course">Курс:</label>
+        <label  id="course">
+            {{ course.name }}
+        </label>
+        </h4>
+    </p>
+    <p>
+        <h4>
+        <label for="lesson">Урок:</label>
+        <label  id="lesson">
+            {{ lesson.name }}
+        </label>
+        </h4>
+    </p>
+    <p>
+        <h4>
+        <label for="is_passed">Пройден:</label>
+        <label  id="is_passed">
+            {% if complete_lesson %}
+                {{ complete_lesson.date }}
+            {% else %}
+                нет
+            {% endif %}
+        </label>
+        </h4>
+    </p>
+
+    {% if task_solution %}
+
+    <p>
+        <h4>
+        <label for="state">Статус ответа:</label>
+        <label  id="state">
+            {% if task_solution.is_true %}
+                Принят
+            {% elif task_solution.is_rejected %}
+                Откланен
+            {% else %}
+                не определен
+            {% endif %}
+        </label>
+    </h4>
+    </p>
+
+    {% endif %}
+
+    {% if test_result %}
+
+    <p>
+        <h4>
+        <label for="result">Лучший результат:</label>
+        <label  id="result">
+            {{ test_result.ball }} %
+        </label>
+    </h4>
+    </p>
+
+    {% endif %}
+
+    <a href="{% url 'teacher_panel:check_users_details_course' user.id course.id %}"><button class="btn btn-outline-secondary">Назад</button></a>
+
+{% endblock %}

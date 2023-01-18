@@ -1,0 +1,16 @@
+{% extends 'navigation/base.html' %}
+
+{% block content %}
+<div class="container p-3">
+<h3> Доступные курсы </h3>
+
+{% for course in courses %}
+  <a href="{% url 'nav_details_course' course.id %}">
+    <button type="button" class="btn btn-light w-100 m-2 text-start"><h4>{{ course.name }}</h4> </button>
+  </a><br>
+
+<!--  <h2><a href="{% url 'nav_details_course' course.id %}" class="text-decoration-none text-reset">{{ course.name }}</a></h2>-->
+
+{% endfor %}
+</div>
+{% endblock %}

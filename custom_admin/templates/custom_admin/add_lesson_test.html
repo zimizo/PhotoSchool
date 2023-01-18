@@ -1,0 +1,82 @@
+{% extends 'custom_admin/base_admin.html' %}
+{% block head %}
+    {% load static %}
+    <script src="/static/custom_admin/add_lesson_test.js"></script>
+    <script src="/static/custom_admin/jquery-3.6.0.min.js"></script>
+
+{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+
+   <p>
+        <label for="id_name">Название:</label>
+        <br>
+        <input class="w-50" type="text" name="name" maxlength="100" required="" id="id_name" value="{{ lesson.name }}">
+    </p>
+
+    <p>
+        <label for="id_description">Описание:</label>
+        <br>
+        <textarea class="w-50" name="description" cols="40" rows="5" maxlength="1000" required="" id="id_description">{{ lesson.description }}</textarea>
+    </p>
+
+    <p>
+        <label for="id_time">Время:</label>
+        <br>
+        <input type="number" name="time" value="15" required="" id="id_time" >
+    </p>
+
+    <p>
+        <label for="id_min_ball">Минимальный балл:</label>
+        <br>
+        <input type="number" name="min_ball" value="60" required="" id="id_min_ball" >
+    </p>
+
+    <p>
+        <label for="id_is_draft">Черновик:</label>
+        <input type="checkbox" name="is_draft" id="id_is_draft">
+    </p>
+
+    <div id="questions">
+
+        <input type="hidden" name="total_questions" value="1" id="total_questions">
+
+        <fieldset id="q_1">
+            <p>
+                <label for="id_text_q_1">Вопрос:</label>
+                <br>
+                <input class="w-50" type="text" name="text_q_1" maxlength="100" required="" id="id_text_q_1">
+                <a onclick="remove_question('q_1')"> <img src="/static/admin/img/icon-deletelink.svg" alt="False" title="Удплить вопрос"> </a>
+            </p>
+
+            <p>
+                <label for="id_description_q_1">Примечание:</label>
+                <br>
+                <textarea class="w-50" name="description_q_1" cols="40" rows="3" maxlength="250" id="id_description_q_1"></textarea>
+            </p>
+
+            <div id="q_1_answers">
+
+                <input type="hidden" name="total_answers_q_1" value="1" id="total_answers_q_1">
+
+                <p id="q_1_a_1">
+                    <input id="cb_1_q_1" type="checkbox" name="cb_1_q_1">
+                    <input class="w-25" type="text" value="Вариант ответа" name="answer_1_q_1" maxlength="100" required="" id="answer_1_q_1">
+
+                    <a onclick="remove_answer('q_1_a_1')">
+                        <img src="/static/admin/img/icon-deletelink.svg" alt="False" title="Удплить вопрос">
+                    </a>
+                </p>
+
+            </div>
+
+            <a onclick="add_answer('q_1')"><img src="/static/admin/img/icon-addlink.svg" alt="False" title="Добавить ответ">  Добавить ответ</a>
+            <br>
+            <a onclick="add_question('q_1')"><img src="/static/admin/img/icon-addlink.svg" alt="False" title="Добавить вопрос">  Добавить вопрос</a>
+
+        </fieldset>
+    </div>
+    <button type="submit" > Создать  </button>
+</form>
+{% endblock %}

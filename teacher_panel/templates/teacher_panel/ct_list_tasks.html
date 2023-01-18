@@ -1,0 +1,20 @@
+{% extends 'teacher_panel/base_teacher_panel.html' %}
+
+{% block content %}
+
+{% if message %}
+
+<div class="alert alert-primary" role="alert">
+    {{ message }}
+</div>
+
+{% endif %}
+
+{% for task in tasks %}
+    <a href="{% url 'teacher_panel:check_task_solution_list' course.id  task.id%}" class="text-decoration-none text-reset"><h2>{{ task.name }}</h2></a>
+{% endfor %}
+
+<a href="{% url 'teacher_panel:check_task_list_courses' %}"><button class="btn btn-outline-secondary">Назад</button></a>
+
+
+{% endblock %}

@@ -1,0 +1,92 @@
+
+{% extends 'navigation/base.html' %}
+{% block head %}
+{% load static %}
+ <head>
+  <meta charset="utf-8">
+  <title>Симулятор камеры</title>
+
+  <!-- Подключение файлов со скриптами и файла со стилем -->
+  <script src="/static/tren1/ScriptSlider.js"></script>
+  <script src="/static/tren1/ScriptPhoto.js"></script>
+  <link rel="stylesheet" href="/static/tren1/Style.css">
+  <!-- Лого для вкладки браузера -->
+  <link rel="icon" href="/static/tren1/logo.png">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+     <div class="cont">
+
+   <div class="wrapper">
+
+      <!-- ФУТЕР ДЛЯ ИНФОРМАЦИИ -->
+
+    <!--  <div id="header">
+
+      Симулятор камеры
+
+       </div> -->
+
+
+
+         <!-- Контейнер с изображение -->
+         <div class="content">
+
+            <div class="inner-content">
+
+               <div class="GIF">
+
+                  <p><img align="center" src="/static/tren1/Image/VidCamera.gif" id="VidCamera">></p>
+
+               </div>
+
+            </div>
+
+         </div>
+
+         <!-- Контейнер с областью ползунков и инофрмации -->
+         <div class="sidebar">
+
+           <!-- Контейнер с ползунками (1 от изображения) -->
+           <div class="inner-sidebar">
+
+               <p align="center" style="color:white;" id="MeaningISO"><b>ISO:</b> 100 </p>
+                  <input type="range" min="1" max="9" id="ISO" value="1" oninput="ChangeMeaningISO()">
+               <p align="center" style="color:white;" id="MeaningShutSpeed"><b>Выдержка:</b> 1 сек.</p>
+
+                  <input type="range" min="1" max="13" id="ShutSpeed" value="1" oninput="ChangeMeaningShutSpeed()">
+               <p align="center" style="color:white;" id="MeaningAperture"><b>Диафрагма:</b> 2.8</p>
+                  <input type="range" min="1" max="7" id="Aperture" value="1" oninput="ChangeMeaningAperture()">
+               <p style="text-align: center" onclick="Snapshot()">
+                  <button class="BtnPhoto">Сделать снимок</button></p>
+               <p style="text-align: center" onclick="Help()">
+                  <button class="BtnPhoto"><a href="/static/tren1/Руководство_Пользователя.pdf" target="_blank">Инструкция</a></button></p>
+
+               </div>
+
+         </div>
+
+         <!-- Контейнер с информацией (2 от изображения) -->
+         <div class="sidebar-2">
+
+            <div class="inner-sidebar-2">
+
+               <div class="sliders">
+                  <p style="color:white;" id="InfoMeaning">Симуляции - достаточно древняя форма обучения. Они произошли от инициаций, то есть обрядов посвящения новых участников в общество. На сегодняшний день симуляторы используются в обучении: военных, медицинских работников, управленцев, специалистов естественнонаучных и технических областей, пилотов, водителей и многих других.</p>
+               </div>
+
+            </div>
+
+         </div>
+
+      </div>
+
+   </div>
+     </div>
+
+   <!-- ПОДВАЛ ДЛЯ ИНФОРМАЦИИ -->
+
+
+{% endblock %}
+

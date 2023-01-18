@@ -1,0 +1,27 @@
+{% extends 'custom_admin/base_admin.html' %}
+
+{% block content %}
+<div class="row p-3">
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+    <li><a href="{% url 'custom_admin:general_page' %}" class="text-decoration-none text-reset"><h6>Главная > </h6></a></li>
+    <li><a href="{% url 'custom_admin:users' %}" class="text-decoration-none text-reset"><h6>Пользователиz  > </h6></a></li>
+    </ul>
+</div>
+<div class="row p-3 w-75">
+    <form method="get">
+        <input name="search_string" type="text" class="w-75 h-100" autocomplete="off">
+        <input name="search_btn" type="submit" value="Найти" class="btn align-top h-100 btn-outline-primary">
+    </form>
+</div>
+<div class="row p-3 w-75">
+    {% for u in users %}
+    <a href="{% url 'custom_admin:user_page' u.id %}" class="text-decoration-none text-reset">
+        <button type="button" class="btn btn-light w-100 m-2 text-start align-bottom">
+
+                <h5>{{ u.last_name }} {{ u.first_name }} {{ u.patronymic }}</h5>
+
+        </button>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

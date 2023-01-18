@@ -1,0 +1,52 @@
+{% extends 'teacher_panel/base_teacher_panel.html' %}
+
+{% block content %}
+
+    <p>
+        <h4>
+        <label for="id_owner">Фио:</label>
+        <label  id="id_owner">
+            {{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}
+        </label>
+    </h4>
+    </p>
+    <p>
+        <h4>
+        <label for="email">Эл. почта:</label>
+        <label  id="email">
+            {{ user.email }}
+        </label>
+    </h4>
+    </p>
+    <p>
+        <h4>
+        <label for="count_courses_pass">Курсов пройдено:</label>
+        <label  id="count_courses_pass">
+            {{ count_courses_pass }}
+        </label>
+        </h4>
+    </p>
+
+
+ <h5>Курсы:</h5>
+{% if message %}
+
+<div class="alert alert-primary" role="alert">
+    {{ message }}
+</div>
+
+{% endif %}
+
+{% for course in courses %}
+
+    <a href="{% url 'teacher_panel:check_users_details_course' user.id course.course.id %}" class="text-decoration-none text-reset">
+        <h4>
+            {{ course.course.name }}
+        </h4>
+    </a>
+
+{% endfor %}
+
+    <a href="{% url 'teacher_panel:check_users_list_users' %}"><button class="btn btn-outline-secondary">Назад</button></a>
+
+{% endblock %}

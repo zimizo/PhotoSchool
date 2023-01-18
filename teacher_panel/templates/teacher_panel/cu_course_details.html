@@ -1,0 +1,38 @@
+{% extends 'teacher_panel/base_teacher_panel.html' %}
+
+{% block content %}
+
+    <p>
+        <h4>
+        <label for="id_owner">Студент:</label>
+        <label  id="id_owner">
+            {{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}
+        </label>
+    </h4>
+    </p>
+    <p>
+        <h4>
+        <label for="course">Курс:</label>
+        <label  id="course">
+            {{ course.name }}
+        </label>
+    </h4>
+    </p>
+
+
+ <h5>Уроки:</h5>
+
+
+{% for lesson in lessons %}
+
+    <a href="{% url 'teacher_panel:check_users_details_lesson' user.id course.id lesson.lesson.content_type lesson.lesson.id %}" class="{% if lesson.is_pass %}link-success{% else %}link-secondary{% endif %} text-decoration-none ">
+        <h4>
+            {{ lesson.lesson.name }}
+        </h4>
+    </a>
+
+{% endfor %}
+
+    <a href="{% url 'teacher_panel:check_users_details' user.id %}"><button class="btn btn-outline-secondary">Назад</button></a>
+
+{% endblock %}

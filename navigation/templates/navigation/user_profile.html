@@ -1,0 +1,98 @@
+{% extends 'navigation/base.html' %}
+
+{% block content %}
+<div class="container py-3">
+   <nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Личные данные</button>
+    <button class="nav-link" id="nav-cp-tab" data-bs-toggle="tab" data-bs-target="#nav-cp" type="button" role="tab" aria-controls="nav-cp" aria-selected="false">Сменить пароль</button>
+    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Курсы</button>
+  </div>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <form method="post" class="p-3 w-50 h-50">
+      {% csrf_token %}
+    <label class="small mb-1" for="{{ form.email.id_for_label }}">Электронный адрес:</label>
+    {{ form.email }}
+      <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Фамилия:</label>
+    {{ form.last_name }}
+      <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Имя:</label>
+    {{ form.first_name }}
+      <label class="small mb-1" for="{{ form.patronymic.id_for_label }}">Отчество:</label>
+    {{ form.patronymic }}
+    <input type="submit" class="btn btn-primary my-3" value="Сохранить" name="user_profile_save">
+    </form>
+  </div>
+
+  <div class="tab-pane fade" id="nav-cp" role="tabpanel" aria-labelledby="nav-cp-tab">
+     <form method="post" class="p-3 w-50 h-50">
+      {% csrf_token %}
+       <label class="small mb-1" for="id_password">Актуальный пароль:</label>
+       <input type="password" name="id_password" value="" class="form-control" required="" id="id_password">
+
+       <label class="small mb-1" for="id_new_password1">Новый пароль:</label>
+       <input type="password" name="new_password1" value="" class="form-control" required="" id="id_new_password1">
+
+       <label class="small mb-1" for="id_new_password2">Подтвердите пароль:</label>
+       <input type="password" name="new_password2" value="" class="form-control" required="" id="id_new_password2">
+    <input type="submit" class="btn btn-primary my-3" value="Сменить пароль" name="change_password">
+    </form>
+  </div>
+
+  <div class="tab-pane fade m-3 h-50" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                В ипроцессе
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+              Завершенные
+            </button>
+        </li>
+
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            {% if course_in_study %}
+                {%for course in course_in_study %}
+
+                    <a href="{% url 'stud_process:study_c' course.id %}">
+                        <button type="button" class="btn btn-light w-100 m-2 text-start">{{ course.name }}</button>
+                    </a><br>
+
+                {% endfor %}
+            {% else %}
+                Тут пока ничего нет
+            {% endif %}
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            {% if complete_courses %}
+                {%for course in complete_courses %}
+
+                    <a href="{% url 'stud_process:study_c' course.id %}">
+                        <button type="button" class="btn btn-light w-100 m-2 text-start">{{ course.name }} </button>
+                    </a><br>
+
+                {% endfor %}
+            {% else %}
+                Тут пока ничего нет
+            {% endif %}
+        </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+</div>
+
+<script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

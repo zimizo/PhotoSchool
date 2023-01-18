@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="canvas" height="1240px" width="1754px"></canvas>
+    </div>
+    <script>
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const image = new Image();
+        image.src = '/static/certificate/Сертификат.jpg';
+
+        image.onload = function () {
+	            drawImage();
+        }
+
+        function drawImage() {
+	        // ctx.clearRect(0, 0, canvas.width, canvas.height);
+	        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+	        ctx.font = '60px monotype corsiva';
+	        ctx.fillStyle = '#ffc107';
+
+	        var textString = '{{ comp.user.last_name }} {{ comp.user.first_name }} {{ comp.user.patronymic }}';
+            var textWidth = ctx.measureText(textString ).width;
+            ctx.fillText(textString , (canvas.width/2) - (textWidth / 2), 662);
+
+            textString = '{{ comp.course.name }}';
+            textWidth = ctx.measureText(textString ).width;
+            ctx.fillText(textString , (canvas.width/2) - (textWidth / 2), 800);
+
+            textString = 'Дата: {{ comp.date|date:'d-m-Y' }} г.';
+            //textWidth = ctx.measureText(textString ).width;
+
+            ctx.font = '50px monotype corsiva';
+            ctx.fillStyle = '#080808';
+            ctx.fillText(textString ,1250, 950);
+
+            download();
+
+
+	        //ctx.fillText('Зиатдинов Ибрахим Булатович', 40, 180);
+        }
+
+
+        var download = function(){
+            var link = document.createElement('a');
+            link.download = '{{ comp.user.last_name }}.png';
+            link.href = canvas.toDataURL()
+            link.click();
+        }
+    </script>
+</body>
+
+</html>

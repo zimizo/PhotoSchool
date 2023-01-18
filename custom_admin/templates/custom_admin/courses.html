@@ -1,0 +1,15 @@
+{% extends 'custom_admin/base_admin.html' %}
+
+{% block content %}
+<div class="row p-3">
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+    <li><a href="{% url 'custom_admin:general_page' %}" class="text-decoration-none text-reset"><h6>Главная > </h6></a></li>
+    </ul>
+</div>
+{% for course in courses %}
+    <a href="{% url 'custom_admin:details_course' course.id %}" class="text-decoration-none text-reset"><h2>{{ course.name }}</h2></a>
+{% endfor %}
+<div class="p-3">
+    <a href="{% url 'custom_admin:add_course' %}" class="btn btn-primary">Добавить курс</a>
+</div>
+{% endblock %}

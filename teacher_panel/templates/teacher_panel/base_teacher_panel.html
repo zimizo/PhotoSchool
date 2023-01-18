@@ -1,0 +1,47 @@
+<head>
+    {% load static %}
+    {% block head %}{% endblock %}
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white">
+
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start position-relative">
+          <div>
+              <h1>Панель преподавателя <a href="{% url 'home' %}" class="btn btn-outline-warning">Главная</a></h1>
+          </div>
+
+        {% if user.is_authenticated %}
+
+          <div class="text-end d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start form position-absolute top-50 end-0 translate-middle-y">
+            <form action="{% url 'users:logoutuser' %}" method="POST" style="margin: 0;">
+                <a href="{% url 'user_profile' %}" class="link px-2 text-white">Вы вошли как: {{ user.email }}</a>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">Выйти</button>
+            </form>
+          </div>
+
+        {% else %}
+
+            <div class="text-end">
+                <a href="{% url 'users:loginuser' %}"> <button type="button" class="btn btn-outline-light me-2">Войти</button> </a>
+                <a href="{% url 'users:signupuser' %}" class="btn btn-warning"> Зарегистрироваться</a>
+            </div>
+
+        {% endif %}
+
+      </div>
+    </div>
+  </header>
+
+<div class="container p-3">{% block content %}{% endblock %}</div>
+
+<script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
